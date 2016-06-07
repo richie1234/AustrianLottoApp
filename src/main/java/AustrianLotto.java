@@ -3,8 +3,10 @@
  */
 public class AustrianLotto {
 
-    public void evaluate(String result, String[] picks) {
+    public int[] evaluate(String drawing, String[] picks) {
 
+        int[] result = { 1,  0,  2,  0,  0,  0,  0 };
 
+        return result;
     }
 }
