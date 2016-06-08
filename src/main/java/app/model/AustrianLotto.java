@@ -18,14 +18,10 @@ public class AustrianLotto {
 
     public int[] evaluate(String drawing, String[] picks) {
 
-        if (drawing ==null || picks == null){
-            throw new IllegalArgumentException("Input strings and picks cannot be null");
-        }
-        else if (!(MIN_PICKS <picks.length && picks.length <= MAX_PICKS)) {
-            throw new IllegalArgumentException("Picks should be between 0 and 50");
-        }
 
-        int numberOfMatches =0;
+        validateInput(drawing, picks);
+
+        int numberOfMatches;
         //used store final results
         int[] result = new int[ARRAY_SIZE];
         //split drawing string by spaces
@@ -36,21 +32,7 @@ public class AustrianLotto {
 
         //Find each pick, split, store, and sorted then
         for (int i = 0; i < picks.length; i++) {
-            String[] pick = picks[i].split(" ");
-            if (pick.length != DRAWING_SIZE) {
-                throw new IllegalArgumentException("Each pick should contain six numbers");
-            }
-
-            List<Integer> pickList = new ArrayList<Integer>();
-            for (int k = 0; k < pick.length; k++) {
-                int pickedNumber = Integer.parseInt(pick[k].trim());
-                if((MIN_LOTTO_NUMBER <= pickedNumber) &&  (pickedNumber <= MAX_LOTTO_NUMBER)){
-                    pickList.add(pickedNumber);
-                }else {
-                    throw new IllegalArgumentException("Lotto numbers should be between 1 and 45 ");
-                }
-            }
-            Collections.sort(pickList);
+            List<Integer> pick = getPickAsASortedList(picks[i]);
             numberOfMatches = 0;
             for (int k = 0; k < drawingTokens.length; k++) {
 
@@ -59,7 +41,7 @@ public class AustrianLotto {
                      throw new IllegalArgumentException("Lotto drawing numbers should be between 1 and 45 ");
                 }
                 // Use binary search algorithm to count the matching numbers
-                if (binarySearch(pickList, searchKey)) {
+                if (binarySearch(pick, searchKey)) {
                     numberOfMatches++;
                 }
             }
@@ -69,6 +51,52 @@ public class AustrianLotto {
         return result;
     }
 
+    /**
+     * Input validation for NUll and Max and Min Picks
+     * @param drawing
+     * @param picks
+     */
+    private void validateInput(String drawing, String[] picks) {
+        if (drawing ==null || picks == null){
+            throw new IllegalArgumentException("Input strings and picks cannot be null");
+        }
+        else if (!(MIN_PICKS <picks.length && picks.length <= MAX_PICKS)) {
+            throw new IllegalArgumentException("Picks should be between 0 and 50");
+        }
+    }
+
+    /**
+     * split, separate and sort each pick
+     * @param pick
+     * @return  list of sorted pick
+     */
+
+    private List<Integer> getPickAsASortedList(String pick) {
+        String[] pickTokens = pick.split(" ");
+        if (pickTokens.length != DRAWING_SIZE) {
+            throw new IllegalArgumentException("Each pick should contain six numbers");
+        }
+
+        List<Integer> pickList = new ArrayList<Integer>();
+        for (int k = 0; k < pickTokens.length; k++) {
+            int pickedNumber = Integer.parseInt(pickTokens[k].trim());
+            if((MIN_LOTTO_NUMBER <= pickedNumber) &&  (pickedNumber <= MAX_LOTTO_NUMBER)){
+                pickList.add(pickedNumber);
+            }else {
+                throw new IllegalArgumentException("Lotto numbers should be between 1 and 45 ");
+            }
+        }
+        Collections.sort(pickList);
+        return pickList;
+    }
+
+    /**
+     * Simple binary search search for given number in a pick if found return true
+     * else return false
+     * @param numbers sorted pick
+     * @param key given number in a pick
+     * @return  pick if found return true else return false
+     */
 
     public static boolean binarySearch(final List<Integer> numbers,
                                        final Integer key) {

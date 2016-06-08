@@ -130,7 +130,7 @@ public class AustrianLottoUnitTest {
         assertArrayEquals(result,expectedResult);
     }
 
-// Boundary value testing
+////////////// Boundary value testing/////////////////////////////////////////////
     @Test(expected = IllegalArgumentException.class)
     public void testLottoAppDrawingTestForZero() {
         String drawing = "42 26 33 2 13 0";
@@ -140,7 +140,6 @@ public class AustrianLottoUnitTest {
         assertArrayEquals(result,expectedResult);
     }
 
-    // Boundary value testing
     @Test(expected = IllegalArgumentException.class)
     public void testLottoAppDrawingTestForFortySIX() {
         String drawing = "42 26 33 2 46 12";
@@ -159,8 +158,7 @@ public class AustrianLottoUnitTest {
         assertArrayEquals(result,expectedResult);
     }
 
-    // Boundary value testing
-    @Test(expected = IllegalArgumentException.class)
+     @Test(expected = IllegalArgumentException.class)
     public void testLottoAppPicksTestForFortySIX() {
         String drawing = "42 26 33 2 45 12";
         String[] picks = {"13 4 36 42 46 12"};
@@ -169,7 +167,7 @@ public class AustrianLottoUnitTest {
         assertArrayEquals(result,expectedResult);
     }
 
-    // Boundary value testing
+
     @Test
     public void testLottoAppCheckForMaxPicksFifty() {
         String drawing = "42 26 33 2 45 12";
@@ -182,7 +180,7 @@ public class AustrianLottoUnitTest {
         assertArrayEquals(result,expectedResult);
     }
 
-    // Boundary value testing
+
     @Test(expected = IllegalArgumentException.class)
     public void testLottoAppCheckForMaxPicksFiftyOne() {
         String drawing = "42 26 33 2 45 12";
@@ -195,7 +193,7 @@ public class AustrianLottoUnitTest {
         assertArrayEquals(result,expectedResult);
     }
 
-    // Boundary value testing
+
     @Test(expected = IllegalArgumentException.class)
     public void testLottoAppDrawingIsEmpty() {
         String drawing = "";
