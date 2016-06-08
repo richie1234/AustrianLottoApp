@@ -13,21 +13,21 @@ public class AustrianLotto {
     public static final int MIN_LOTTO_NUMBER = 1;
     public static final int MAX_LOTTO_NUMBER = 45;
     public static final int MAX_PICKS = 50;
+    public static final int MIN_PICKS = 0;
+    public static final int ARRAY_SIZE = 7;
 
     public int[] evaluate(String drawing, String[] picks) {
 
-
-
         if (drawing ==null || picks == null){
-            throw new IllegalArgumentException("input strings and picks cannot be null");
+            throw new IllegalArgumentException("Input strings and picks cannot be null");
         }
-        else if (!(picks.length <= MAX_PICKS)) {
-            throw new IllegalArgumentException("Maximum Picks should be 50");
+        else if (!(MIN_PICKS <picks.length && picks.length <= MAX_PICKS)) {
+            throw new IllegalArgumentException("Picks should be between 0 and 50");
         }
 
         int numberOfMatches =0;
         //used store final results
-        int[] result = new int[7];
+        int[] result = new int[ARRAY_SIZE];
         //split drawing string by spaces
         String[] drawingTokens = drawing.split(" ");
         if (drawingTokens.length != DRAWING_SIZE) {
